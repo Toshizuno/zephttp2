@@ -1,7 +1,7 @@
 # ZephTTP2
 ZephTTP2 is an interface built on top of `node:http2` with the sole intent of making everything easy to use while creating as barebones of a framework as possible, staying as faithful to the original syntax of `node:http2` as possible.
 ## Installation.
-You can install ZephTTP by opening a command prompt in your project's directory and typing `npm install zephttp2`. Import the module by using the following import in your project:
+You can install ZephTTP2 by opening a command prompt in your project's directory and typing `npm install zephttp2`. Import the module by using the following import in your project:
 ```js
 import zephttp2 from 'zephttp2';
 ```
@@ -32,14 +32,12 @@ const server = zephttp2.createServer();
 server.on('/', {
         allowedMethods: ['get'],
         allowedSubdomains: ['', 'www']
-}, function (request, response) {
+}, function (stream, headers) {
         // Sends the header information to the client.
-        response.writeHead(200, {
-                'content-type': 'text/html'
-        });
+        stream.respond({ ':status': 200, 'content-type': 'text/html' });
         
         // Sends the response to the client.
-        response.end('<!DOCTYPE html><html lang="en"><head></head><body><p>Hello, world!</p></body></html>');
+        stream.end('<!DOCTYPE html><html lang="en"><head></head><body><p>Hello, world!</p></body></html>');
 });
 ```
 ## Exposing the server to the internet.
@@ -56,12 +54,10 @@ server.on('/', {
         allowedSubdomains: ['', 'www']
 }, function (request, response) {
         // Sends the header information to the client.
-        response.writeHead(200, {
-                'content-type': 'text/html'
-        });
+        stream.respond({ ':status': 200, 'content-type': 'text/html' });
         
         // Sends the response to the client.
-        response.end('<!DOCTYPE html><html lang="en"><head></head><body><p>Hello, world!</p></body></html>');
+        stream.end('<!DOCTYPE html><html lang="en"><head></head><body><p>Hello, world!</p></body></html>');
 });
 
 // Exposes the HTTP/2 server to the internet.
